@@ -7,9 +7,29 @@
     <style>
         body { background: #121212; color: #fff; font-family: sans-serif; padding: 15px; margin: 0; }
         
-        .controls { display: flex; flex-direction: column; gap: 15px; margin-bottom: 25px; align-items: center; }
+        /* Updated controls to accommodate the search bar margin */
+        .controls { 
+            display: flex; 
+            flex-direction: column; 
+            gap: 15px; 
+            margin-bottom: 25px; 
+            align-items: center; 
+            width: 100%;
+        }
         
-        #searchBar { width: 100%; max-width: 500px; padding: 18px; border-radius: 10px; border: 1px solid #444; background: #000; color: #fff; font-size: 16px; }
+        /* Update for search bar to be more compact and have margins on mobile */
+        #searchBar { 
+            width: calc(100% - 40px); /* Leaves 20px space on both sides */
+            max-width: 500px; 
+            padding: 14px; /* Slightly smaller padding */
+            border-radius: 10px; 
+            border: 1px solid #444; 
+            background: #000; 
+            color: #fff; 
+            font-size: 16px; 
+            margin-top: 10px; /* Added space from the top */
+            box-sizing: border-box; /* Ensures padding doesn't push it out of bounds */
+        }
         
         /* Horizontal scroll for filter buttons on mobile */
         .filters { 

@@ -2,13 +2,14 @@
 <html lang="ro">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Acasa Gold Live</title>
     <style>
         body { background-color: #000 !important; color: #fff !important; font-family: Arial, sans-serif !important; margin: 0 !important; padding: 20px !important; display: flex !important; flex-direction: column !important; align-items: center !important; width: 100% !important; box-sizing: border-box !important; }
         .header { display: flex !important; align-items: center !important; justify-content: center !important; gap: 20px !important; margin-bottom: 20px !important; width: 100% !important; max-width: 800px !important; }
         .logo { width: 80px; background-color: #ffffff; padding: 5px; border-radius: 5px; object-fit: contain; }
         h1 { margin: 0 !important; font-size: 2em !important; }
-        .player-container { width: 100% !important; max-width: 800px !important; aspect-ratio: 16 / 9 !important; background: #1a1a1a !important; border: 2px solid #333 !important; margin: 0 auto !important; display: block !important; }
+        .player-container { width: 100% !important; max-width: 800px !important; aspect-ratio: 16 / 9 !important; background: #1a1a1a !important; border: 2px solid #333 !important; margin: 0 auto !important; display: block !important; overflow: hidden !important; }
         iframe { width: 100% !important; height: 100% !important; border: none !important; }
     </style>
 </head>
@@ -17,30 +18,32 @@
         <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn-0.tvprofil.com%2Fimg%2Fkanali-logo%2FAcasa_Gold_RO_logo.png&f=1&nofb=1&ipt=22c3b030b1834ddd3b284a3f5735f7c1310d3764861e1be5083fa29965090d6c" alt="Logo Acasa Gold" class="logo">
         <h1>Acasa Gold Live</h1>
     </div>
+
+    <!-- Added allow="fullscreen" to ensure the iframe supports the command -->
     <div class="player-container">
-        <iframe src="https://canale-tv.net/channel/acasagold.html" allowfullscreen allow="autoplay; encrypted-media"></iframe>
+        <iframe id="tv-player" src="https://canale-tv.net/channel/acasagold.html" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" allow="autoplay; encrypted-media; fullscreen"></iframe>
     </div>
+
     <div style="text-align: center; margin-top: 20px;">
-    <button id="fullscreen-btn" style="padding: 15px 30px; font-size: 18px; background: #e50914; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold;">
-        FULLSCREEN
-    </button>
-</div>
+        <button id="fullscreen-btn" style="padding: 15px 30px; font-size: 18px; background: #e50914; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold;">
+            FULLSCREEN
+        </button>
+    </div>
+
 <script>
     const btn = document.getElementById('fullscreen-btn');
-    const playerContainer = document.querySelector('.player-container');
+    const player = document.getElementById('tv-player');
 
     btn.addEventListener('click', () => {
-        // Standard Fullscreen API for most browsers
-        if (playerContainer.requestFullscreen) {
-            playerContainer.requestFullscreen();
-        } 
-        // Safari and iOS specific support
-        else if (playerContainer.webkitRequestFullscreen) {
-            playerContainer.webkitRequestFullscreen();
-        }
-        // Microsoft Edge/IE support
-        else if (playerContainer.msRequestFullscreen) {
-            playerContainer.msRequestFullscreen();
+        // We target the IFRAME itself, not the container
+        if (player.requestFullscreen) {
+            player.requestFullscreen();
+        } else if (player.webkitRequestFullscreen) {
+            player.webkitRequestFullscreen();
+        } else if (player.msRequestFullscreen) {
+            player.msRequestFullscreen();
+        } else {
+            alert("Fullscreen not supported by this browser/device.");
         }
     });
 </script>
