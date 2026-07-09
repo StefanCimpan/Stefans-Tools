@@ -2,7 +2,7 @@
 
 Welcome to **Stefan's Tools**, a collection of utility tools and resources designed to make information easily accessible.
 
-Check out the live project here: [https://stefancimpan.github.io/Stefans-Tools.github.io/](https://stefancimpan.github.io/Stefans-Tools.github.io/)
+Check out the live project here: [https://stefancimpan.github.io/Stefans-Tools/](https://stefancimpan.github.io/Stefans-Tools/)
 
 ## Current Features
 
@@ -16,10 +16,7 @@ I am constantly working on improving this platform. Planned updates include:
 *   [ ] Additional utility tools.
 *   [ ] Improved UI/UX for the TV guide.
 *   [ ] Integration of more data sources.
-*   [ ] *[Add your next idea here]*
+*   [ ] Python Scripts.
 
 ## Contributing
 While this is currently a personal project, feel free to explore the code. If you find any bugs or have suggestions for new features, please open an issue or reach out!
-
-## License
-This project is open-source. See the [LICENSE](LICENSE) file for more details.
