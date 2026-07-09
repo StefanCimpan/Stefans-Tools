@@ -20,5 +20,29 @@
     <div class="player-container">
         <iframe src="https://canale-tv.net/channel/acasagold.html" allowfullscreen allow="autoplay; encrypted-media"></iframe>
     </div>
+    <div style="text-align: center; margin-top: 20px;">
+    <button id="fullscreen-btn" style="padding: 15px 30px; font-size: 18px; background: #e50914; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold;">
+        FULLSCREEN
+    </button>
+</div>
+<script>
+    const btn = document.getElementById('fullscreen-btn');
+    const playerContainer = document.querySelector('.player-container');
+
+    btn.addEventListener('click', () => {
+        // Standard Fullscreen API for most browsers
+        if (playerContainer.requestFullscreen) {
+            playerContainer.requestFullscreen();
+        } 
+        // Safari and iOS specific support
+        else if (playerContainer.webkitRequestFullscreen) {
+            playerContainer.webkitRequestFullscreen();
+        }
+        // Microsoft Edge/IE support
+        else if (playerContainer.msRequestFullscreen) {
+            playerContainer.msRequestFullscreen();
+        }
+    });
+</script>
 </body>
 </html>
