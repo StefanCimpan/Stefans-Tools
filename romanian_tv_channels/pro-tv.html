@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <title>PRO TV Live</title>
+    <style>
+        /* Force body to take full width and center children */
+        body { 
+            background-color: #000; 
+            color: #fff; 
+            font-family: Arial, sans-serif; 
+            margin: 0; 
+            padding: 20px;
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; /* Centers items horizontally */
+            width: 100%;
+            box-sizing: border-box;
+        }
+        
+        .header { 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            gap: 20px; 
+            margin-bottom: 20px; 
+            width: 100%; 
+            max-width: 800px; 
+        }
+        
+        .logo { width: 80px; background-color: #ffffff; padding: 5px; border-radius: 5px; object-fit: contain; }
+        
+        h1 { margin: 0; font-size: 2em; }
+
+        /* Force the container to be centered within the flex column */
+        .player-container { 
+            width: 100%; 
+            max-width: 800px; 
+            aspect-ratio: 16 / 9; 
+            background: #1a1a1a; 
+            border: 2px solid #333;
+            /* Ensures it doesn't stretch or shift */
+            display: block;
+            margin: 0 auto; 
+        }
+        
+        iframe { width: 100%; height: 100%; border: none; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <img src="https://programtv.ro/assets/pro_tv.png" alt="Logo PRO TV" class="logo">
+        <h1>PRO TV Live</h1>
+    </div>
+
+    <div class="player-container">
+        <iframe src="https://canale-tv.net/channel/pr0tv.html" allowfullscreen allow="autoplay; encrypted-media"></iframe>
+    </div>
+</body>
+</html>

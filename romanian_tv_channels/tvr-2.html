@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <title>TVR 2 Live</title>
+    <style>
+        /* Force body to take full width and center children */
+        body { 
+            background-color: #000 !important; 
+            color: #fff !important; 
+            font-family: Arial, sans-serif !important; 
+            margin: 0 !important; 
+            padding: 20px !important;
+            display: flex !important; 
+            flex-direction: column !important; 
+            align-items: center !important; 
+            width: 100% !important;
+            box-sizing: border-box !important;
+        }
+        
+        /* Header styling with flex for logo-title alignment */
+        .header { 
+            display: flex !important; 
+            align-items: center !important; 
+            justify-content: center !important; 
+            gap: 20px !important; 
+            margin-bottom: 20px !important; 
+            width: 100% !important; 
+            max-width: 800px !important; 
+        }
+        
+        /* Logo with white background padding */
+        .logo { width: 80px; background-color: #ffffff; padding: 5px; border-radius: 5px; object-fit: contain; }
+        
+        h1 { margin: 0 !important; font-size: 2em !important; }
+
+        /* Centered player container */
+        .player-container { 
+            width: 100% !important; 
+            max-width: 800px !important; 
+            aspect-ratio: 16 / 9 !important; 
+            background: #1a1a1a !important; 
+            border: 2px solid #333 !important;
+            margin: 0 auto !important; 
+            display: block !important;
+        }
+        
+        iframe { width: 100% !important; height: 100% !important; border: none !important; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <img src="https://programtv.ro/assets/tvr_2.png" alt="Logo TVR 2" class="logo">
+        <h1>TVR 2 Live</h1>
+    </div>
+
+    <div class="player-container">
+        <!-- The live stream iframe for TVR 2 -->
+        <iframe src="https://canale-tv.net/channel/tvr2.html" allowfullscreen allow="autoplay; encrypted-media"></iframe>
+    </div>
+
+    <!-- Code injected by live-server -->
+    <script>
+        if ('WebSocket' in window) {
+            (function () {
+                function refreshCSS() {
+                    var sheets = [].slice.call(document.getElementsByTagName("link"));
+                    var head = document.getElementsByTagName("head")[0];
+                    for (var i = 0; i < sheets.length; ++i) {
+                        var elem = sheets[i];
+                        var parent = elem.parentElement || head;
+                        parent.removeChild(elem);
+                        var rel = elem.rel;
+                        if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+                            var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+                            elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+                        }
+                        parent.appendChild(elem);
+                    }
+                }
+                var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+                var address = protocol + window.location.host + window.location.pathname + '/ws';
+                var socket = new WebSocket(address);
+                socket.onmessage = function (msg) {
+                    if (msg.data == 'reload') window.location.reload();
+                    else if (msg.data == 'refreshcss') refreshCSS();
+                };
+            })();
+        }
+    </script>
+</body>
+</html>

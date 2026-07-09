@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <title>Canale TV Online</title>
+    <style>
+        body { background: #121212; color: #fff; font-family: sans-serif; padding: 20px; }
+        .controls { display: flex; flex-direction: column; gap: 15px; margin-bottom: 20px; align-items: center; }
+        #searchBar { width: 100%; max-width: 400px; padding: 12px; border-radius: 5px; border: 1px solid #444; background: #000; color: #fff; }
+        .filters { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+        button { padding: 10px 15px; cursor: pointer; border: none; border-radius: 5px; background: #333; color: #fff; font-weight: bold; }
+        button:hover { background: #e50914; }
+        
+        .grid-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; }
+        
+        .channel-card { 
+            background: #1e1e1e; padding: 10px; text-align: center; border-radius: 8px; 
+            display: flex; flex-direction: column; align-items: center; justify-content: center; 
+            height: 150px; border: 2px solid #333; box-sizing: border-box; /* Asigură încadrarea */
+            font-size: 13px; text-decoration: none; color: #fff; transition: 0.3s; 
+        }
+        .channel-card:hover { background: #333; border-color: #e50914; }
+    </style>
+</head>
+<body>
+
+<div class="controls">
+    <input type="text" id="searchBar" placeholder="Caută canalul dorit...">
+    <div class="filters" id="filters"></div>
+</div>
+
+<div class="grid-container" id="grid"></div>
+
+<script>
+const channels = [
+    { name: "PRO TV", cat: "Generaliste" }, { name: "Antena 1", cat: "Generaliste" }, { name: "TVR 1", cat: "Generaliste" }, { name: "TVR 2", cat: "Generaliste" }, { name: "Kanal D", cat: "Generaliste" },
+    { name: "Kanal D2", cat: "Generaliste" }, { name: "Prima TV", cat: "Generaliste" }, { name: "National TV", cat: "Generaliste" }, { name: "TVR 3", cat: "Generaliste" }, { name: "TVR Int.", cat: "Generaliste" },
+    { name: "Acasa", cat: "Generaliste" }, { name: "Acasa Gold", cat: "Generaliste" }, { name: "Antena Stars", cat: "Generaliste" }, { name: "National 24 Plus", cat: "Generaliste" },
+    { name: "Antena 3 CNN", cat: "Stiri" }, { name: "Romania TV", cat: "Stiri" }, { name: "Realitatea Plus", cat: "Stiri" }, { name: "Prima News", cat: "Stiri" }, { name: "B1 TV", cat: "Stiri" }, 
+    { name: "Euronews Ro", cat: "Stiri" }, { name: "News24", cat: "Stiri" }, { name: "CNN", cat: "Stiri" }, { name: "BBC News", cat: "Stiri" }, { name: "BBC Earth", cat: "Stiri" },
+    { name: "Supersport 1", cat: "Sport" }, { name: "Supersport 2", cat: "Sport" }, { name: "Supersport 3", cat: "Sport" }, { name: "Supersport 4", cat: "Sport" }, { name: "Pro Arena", cat: "Sport" },
+    { name: "TVR Sport", cat: "Sport" }, { name: "Prima Sport 1", cat: "Sport" }, { name: "Prima Sport 2", cat: "Sport" }, { name: "Prima Sport 3", cat: "Sport" }, { name: "Prima Sport 4", cat: "Sport" },
+    { name: "Prima Sport 5", cat: "Sport" }, { name: "PPV 1", cat: "Sport" }, { name: "PPV 2", cat: "Sport" }, { name: "PPV 3", cat: "Sport" }, { name: "Sport Extra", cat: "Sport" },
+    { name: "Eurosport 1", cat: "Sport" }, { name: "Eurosport 2", cat: "Sport" }, { name: "Fish & Hunting", cat: "Sport" },
+    { name: "PRO Cinema", cat: "Filme" }, { name: "HBO", cat: "Filme" }, { name: "HBO 2", cat: "Filme" }, { name: "HBO 3", cat: "Filme" }, { name: "Diva", cat: "Filme" }, { name: "Happy TV Live", cat: "Filme" }, { name: "Film Cafe", cat: "Filme" },
+    { name: "TV 1000", cat: "Filme" }, { name: "Film Now", cat: "Filme" }, { name: "Epic Drama", cat: "Filme" }, { name: "AMC", cat: "Filme" }, { name: "Showtime 1", cat: "Filme" }, 
+    { name: "Showtime 2", cat: "Filme" }, { name: "AXN HD", cat: "Filme" }, { name: "AXN Spin", cat: "Filme" }, { name: "AXN Black", cat: "Filme" }, { name: "AXN White", cat: "Filme" }, 
+    { name: "Cinemax", cat: "Filme" }, { name: "Cinemax 2", cat: "Filme" }, { name: "Bollywood TV", cat: "Filme" }, { name: "Comedy Central", cat: "Filme" }, { name: "Warner TV", cat: "Filme" },
+    { name: "Minimax", cat: "Copii" }, { name: "Cartoon Network", cat: "Copii" }, { name: "Disney Channel", cat: "Copii" }, { name: "Teen Nick", cat: "Copii" }, { name: "Nickelodeon", cat: "Copii" }, 
+    { name: "Disney Jr", cat: "Copii" }, { name: "Cartoonito", cat: "Copii" }, { name: "Nicktoons", cat: "Copii" }, { name: "Nick Jr", cat: "Copii" }, { name: "Jim Jam", cat: "Copii" }, { name: "Duck TV", cat: "Copii" },
+    { name: "Discovery", cat: "Documentare" }, { name: "History", cat: "Documentare" }, { name: "Nat Geo People", cat: "Documentare" }, { name: "National Geo", cat: "Documentare" }, 
+    { name: "Investigation Discovery", cat: "Documentare" }, { name: "Crime & Investigation", cat: "Documentare" }, { name: "TLC", cat: "Documentare" }, { name: "Nat Geo Wild", cat: "Documentare" }, 
+    { name: "Viasat History", cat: "Documentare" }, { name: "Viasat Nature", cat: "Documentare" }, { name: "Viasat Explorer", cat: "Documentare" }, { name: "Travel Mix", cat: "Documentare" }, { name: "Paprika", cat: "Documentare" }, { name: "HGTV", cat: "Documentare" },
+    { name: "Taraf TV", cat: "Muzica" }, { name: "Favorit TV", cat: "Muzica" }, { name: "Etno TV", cat: "Muzica" }, { name: "Hit Music", cat: "Muzica" }, { name: "Balcan Music", cat: "Muzica" },
+    { name: "UTV", cat: "Muzica" }, { name: "Kiss TV", cat: "Muzica" }, { name: "Music Channel", cat: "Muzica" }, { name: "ZU TV", cat: "Muzica" } 
+];
+
+function getSlug(name) {
+    return name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+}
+
+function render(list) {
+    const grid = document.getElementById('grid');
+    grid.innerHTML = '';
+    list.forEach(c => {
+        const slug = getSlug(c.name);
+        grid.innerHTML += `<a href="/romanian_tv_channels/${slug}.html" class="channel-card">${c.name}</a>`;
+    });
+}
+
+function updateButtons() {
+    const cats = ["Toate", "Generaliste", "Stiri", "Sport", "Filme", "Copii", "Documentare", "Muzica"];
+    const container = document.getElementById('filters');
+    container.innerHTML = '';
+    cats.forEach(cat => {
+        const count = cat === "Toate" ? channels.length : channels.filter(c => c.cat === cat).length;
+        const btn = document.createElement('button');
+        btn.textContent = `${cat} (${count})`;
+        btn.onclick = () => filter(cat);
+        container.appendChild(btn);
+    });
+}
+
+function filter(cat) {
+    if (cat === 'Toate') render(channels);
+    else render(channels.filter(c => c.cat === cat));
+}
+
+document.getElementById('searchBar').oninput = function(e) {
+    const val = e.target.value.toLowerCase();
+    render(channels.filter(c => c.name.toLowerCase().includes(val)));
+};
+
+updateButtons();
+render(channels);
+</script>
+</body>
+</html>
