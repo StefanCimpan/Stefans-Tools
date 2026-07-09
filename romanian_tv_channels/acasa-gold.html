@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ro">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,6 +11,9 @@
         h1 { margin: 0 !important; font-size: 2em !important; }
         .player-container { width: 100% !important; max-width: 800px !important; aspect-ratio: 16 / 9 !important; background: #1a1a1a !important; border: 2px solid #333 !important; margin: 0 auto !important; display: block !important; overflow: hidden !important; }
         iframe { width: 100% !important; height: 100% !important; border: none !important; }
+        
+        /* Style for the Safari instruction message */
+        #safari-hint { margin-top: 20px; color: #aaa; font-size: 14px; text-align: center; }
     </style>
 </head>
 <body>
@@ -19,33 +22,22 @@
         <h1>Acasa Gold Live</h1>
     </div>
 
-    <!-- Added allow="fullscreen" to ensure the iframe supports the command -->
     <div class="player-container">
-        <iframe id="tv-player" src="https://canale-tv.net/channel/acasagold.html" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" allow="autoplay; encrypted-media; fullscreen"></iframe>
+        <!-- Added allowfullscreen attribute for player native support -->
+        <iframe src="https://canale-tv.net/channel/acasagold.html" allowfullscreen="true" allow="autoplay; encrypted-media; fullscreen"></iframe>
     </div>
 
-    <div style="text-align: center; margin-top: 20px;">
-        <button id="fullscreen-btn" style="padding: 15px 30px; font-size: 18px; background: #e50914; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold;">
-            FULLSCREEN
-        </button>
-    </div>
+    <!-- Safari instruction message container -->
+    <div id="safari-hint"></div>
 
-<script>
-    const btn = document.getElementById('fullscreen-btn');
-    const player = document.getElementById('tv-player');
+    <script>
+        // Check if the user is on Safari to show instructions
+        const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 
-    btn.addEventListener('click', () => {
-        // We target the IFRAME itself, not the container
-        if (player.requestFullscreen) {
-            player.requestFullscreen();
-        } else if (player.webkitRequestFullscreen) {
-            player.webkitRequestFullscreen();
-        } else if (player.msRequestFullscreen) {
-            player.msRequestFullscreen();
-        } else {
-            alert("Fullscreen not supported by this browser/device.");
+        if (isSafari) {
+            document.getElementById('safari-hint').innerHTML = 
+                "For fullscreen, tap the <strong>aA</strong> icon in the address bar and select <strong>Request Desktop Website</strong>.";
         }
-    });
-</script>
+    </script>
 </body>
 </html>
