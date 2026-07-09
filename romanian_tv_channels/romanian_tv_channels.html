@@ -64,7 +64,7 @@ function render(list) {
     grid.innerHTML = '';
     list.forEach(c => {
         const slug = getSlug(c.name);
-        grid.innerHTML += `<a href="/romanian_tv_channels/${slug}.html" class="channel-card">${c.name}</a>`;
+        grid.innerHTML += `<a href="${slug}.html" class="channel-card">${c.name}</a>`;
     });
 }
 
