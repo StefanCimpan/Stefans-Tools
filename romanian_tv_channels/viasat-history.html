@@ -18,7 +18,20 @@
         <h1>Viasat History Live</h1>
     </div>
     <div class="player-container">
-        <iframe src="https://canale-tv.net/channel/viahist.html" allowfullscreen allow="autoplay; encrypted-media"></iframe>
+        <iframe src="https://canale-tv.net/channel/viahist.html" allowfullscreen allow="autoplay; encrypted-media; fullscreen"></iframe>
     </div>
+
+    <!-- Instruction message container -->
+    <div id="instruction-hint"></div>
+
+    <script>
+        // Check if the user is on an Apple device (iPhone, iPad, Mac)
+        const isAppleDevice = /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent);
+
+        if (isAppleDevice) {
+            document.getElementById('instruction-hint').innerHTML = 
+                "For fullscreen on Apple devices: tap the <strong>aA</strong> icon in the address bar and select <strong>Request Desktop Website</strong>.";
+        }
+    </script>
 </body>
 </html>
